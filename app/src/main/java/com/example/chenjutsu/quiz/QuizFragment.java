@@ -4,6 +4,7 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 
+import android.text.Editable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,9 +31,9 @@ public class QuizFragment extends Fragment {
     private String mParam1;
     private String mParam2;
     private Button nextButton;
-    public static String inputString;
+    private EditText editor;
+   // private OnFragmentInteractionListener mListener;
 
-    //private OnFragmentInteractionListener mListener;
 
     public QuizFragment() {
         // Required empty public constructor
@@ -64,6 +65,7 @@ public class QuizFragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
+
     }
 
     @Override
@@ -72,7 +74,16 @@ public class QuizFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = null;
         view = inflater.inflate(R.layout.fragment_quiz, container, false);
-
+//        editor = (EditText)view.findViewById(R.id.input);
+//
+//        String editorString = editor.getText().toString();
+//        if(editorString == null){
+//            QuizActivity.InputString = editorString;
+//        }
+//        else{
+//            QuizActivity.InputString = editorString;
+//        }
+        //QuizActivity.InputString =
         nextButton = (Button)view.findViewById(R.id.nextQuestion);
         return view;
     }
@@ -111,14 +122,18 @@ public class QuizFragment extends Fragment {
      * "http://developer.android.com/training/basics/fragments/communicating.html"
      * >Communicating with Other Fragments</a> for more information.
      */
-//    public interface OnFragmentInteractionListener {
-//        // TODO: Update argument type and name
-//        void onFragmentInteraction(Uri uri);
-//    }
+
     public void onViewCreated(View view, Bundle savedInstanceState){
         super.onViewCreated(view,savedInstanceState);
-        EditText editor = (EditText)view.findViewById(R.id.input);
-        inputString = editor.getText().toString();
+//        editor = (EditText)view.findViewById(R.id.input);
+//        Editable editable = editor.getText();
+//        if(editable.length() == 0){
+//            QuizActivity.InputString = "null";
+//        }
+//        else{
+//            QuizActivity.InputString = "NOT NULL";
+//        }
+
         nextButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v){
                 getFragmentManager()
@@ -126,10 +141,21 @@ public class QuizFragment extends Fragment {
                         .replace(R.id.main_fragment_container,TextFragment.newInstance(null,null))
                         .addToBackStack(null)
                         .commit();
+                //Put code to read EditText here
+                editor = (EditText)getActivity().findViewById(R.id.input);
+
+                QuizActivity.InputString = editor.getText().toString();
+
 
             }
 
         });
     }
+     public String inputString(){
+
+         return editor.getText().toString();
+     }
+
+
 
 }

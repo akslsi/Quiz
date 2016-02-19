@@ -6,12 +6,15 @@ import android.content.DialogInterface;
 import android.net.Uri;
 import android.os.Bundle;
 
+import android.provider.CalendarContract;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.app.Fragment;
 import android.widget.EditText;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.app.AlertDialog.Builder;
 
 
 /**
@@ -28,16 +31,18 @@ public class TextFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     private Button resultButton;
-    private static EditText input;
-    private String inputString;
+
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    //private int num;
+    private Boolean isRight;
+    private Boolean isRight1;
+    private int num;
 
 
 
-   // private OnFragmentInteractionListener mListener;
+
+    //private OnFragmentInteractionListener mListener;
 
     public TextFragment() {
         // Required empty public constructor
@@ -74,14 +79,47 @@ public class TextFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = null;
-//        view = inflater.inflate(R.layout.fragment_quiz,container,false);
-//        EditText editor = (EditText)view.findViewById(R.id.input);
-//        inputString = editor.getText().toString();
-        view = inflater.inflate(R.layout.fragment_text, container, false);
         // Inflate the layout for this fragment
+        view = inflater.inflate(R.layout.fragment_text, container, false);
+        num = 0;
+
+
+         final CheckBox checkBox2 = (CheckBox)view.findViewById(R.id.checkBox2);
+         final CheckBox checkBox = (CheckBox)view.findViewById(R.id.checkBox);
+         final CheckBox checkBox3 = (CheckBox)view.findViewById(R.id.checkBox3);
+         final CheckBox checkBox4 = (CheckBox)view.findViewById(R.id.checkBox4);
+         final CheckBox checkBox5 = (CheckBox)view.findViewById(R.id.checkBox5);
+      //check whether the right checkBox is being checked
+        if(checkBox2.isChecked() && !checkBox.isChecked() && !checkBox3.isChecked()&&
+                checkBox4.isChecked()&&checkBox5.isChecked()){
+            isRight = true;
+        }else{
+            isRight = false;
+        }
+//        if(checkBox2.isChecked()){
+//              num = 0;
+//        }
+//        if(checkBox.isChecked()){
+//              num++;
+//        }
+//        if(checkBox3.isChecked()){
+//              num++;
+//         }
+//        if(checkBox4.isChecked()){
+//              num++;
+//         }
+//        if(checkBox5.isChecked()){
+//              num++;
+//        }
+//        if(num > 0){
+//            isRight = false;
+//        }
+//        if(num == 0){
+//            isRight = true;
+//        }
+
         resultButton = (Button)view.findViewById(R.id.resultButton);
-        //input = (EditText)getActivity().findViewById(R.id.input);
-        //inputString = input.getText().toString();
+
         return view;
 
     }
@@ -90,27 +128,24 @@ public class TextFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        String answ = "animal";
-        //input = (EditText)((QuizActivity)getActivity()).findViewById(R.id.input);
-        //inputString = input.getText().toString();
-       // QuizFragment newF = new QuizFragment();
-        //inputString = getActivity().inputStrin;
 
-
-
+       if(QuizActivity.InputString.equals("animal")){
+           isRight1 = true;
+       }
+        if(QuizActivity.InputString.equals(" ")|| !QuizActivity.InputString.equals("animal")){
+            isRight1 = false;
+        }
 
         resultButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                displayScore("2");
-//                String num = "2";
-//            if(inputString.equals( "animal")){
-//                displayScore(num);
-//
-//            }
-//                else {
-//                displayScore(inputString);
-//            }
+
+
+
+                    displayScore();
+
+
+
 
 
             }
@@ -128,33 +163,75 @@ public class TextFragment extends Fragment {
 
 
 
-    public void displayScore(String score){
+    public void displayScore(){
 
         //TODO finish implementing this AlertDialog
 
+        Builder dialog = new AlertDialog.Builder(getActivity());
+        dialog.setCancelable(true);
+        dialog.setTitle("Number of questions get right:");
+//        if(num == 0){
+//            isRight = true;
+//        }else{
+//            isRight = false;
+//        }
 
-        //do a prompt about the winner
-        new AlertDialog.Builder(getActivity())
-                .setCancelable(true)
-                .setTitle("number get right:")
-                .setMessage(score)
-                .setPositiveButton("Replay", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        //TODO start a rematch!
-                        getFragmentManager().popBackStack();
+        if(isRight1 && isRight){
+            dialog.setMessage("get 2 questions right");
+        }
+        if(!isRight1 && isRight){
+            dialog.setMessage("get second question right");
+        }
+        if(isRight1 && !isRight){
+            dialog.setMessage("get first question right");
+        }
+        if(!isRight1 && !isRight){
+            dialog.setMessage("get 0 question right");
+        }
 
-                    }
-                })
-                .setNegativeButton("Quit", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        //TODO back out the the start screen
-                        getActivity().finish();
 
-                    }
-                })
-                .show();
+
+        dialog.setPositiveButton("Replay", new DialogInterface.OnClickListener(){
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                //TODO start a rematch!
+                getFragmentManager().popBackStack();
+
+            }
+        });
+        dialog.setNegativeButton("Quit", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                //TODO back out the the start screen
+                getActivity().finish();
+
+            }
+        });
+        dialog.show();
+//        //do a prompt about the winner
+//        new AlertDialog.Builder(getActivity())
+//                .setCancelable(true)
+//                .setTitle("number get right:")
+//
+//                    .setMessage("you get 1 right")
+//
+//                .setPositiveButton("Replay", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialog, int which) {
+//                        //TODO start a rematch!
+//                        getFragmentManager().popBackStack();
+//
+//                    }
+//                })
+//                .setNegativeButton("Quit", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialog, int which) {
+//                        //TODO back out the the start screen
+//                        getActivity().finish();
+//
+//                    }
+//                })
+//                .show();
 
     }
 
@@ -165,7 +242,7 @@ public class TextFragment extends Fragment {
 //        }
 //    }
 
-//    @Override
+    //@Override
 //    public void onAttach(Context context) {
 //        super.onAttach(context);
 //        if (context instanceof OnFragmentInteractionListener) {
@@ -194,6 +271,9 @@ public class TextFragment extends Fragment {
      */
 //    public interface OnFragmentInteractionListener {
 //        // TODO: Update argument type and name
+//        void onFragmentInteraction(Uri uri);
+//    }
+//    public interface OnFragmentInteractionListener{
 //        void onFragmentInteraction(Uri uri);
 //    }
 }

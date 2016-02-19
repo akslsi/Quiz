@@ -27,7 +27,9 @@
              android:layout_height="wrap_content"
              android:layout_margin = "5dp"
              android:hint = "type your answer here"
-             android:id = "@+id/input"/>
+             android:id = "@+id/input"
+
+             />
          <Button
              android:layout_width="340dp"
              android:layout_height="wrap_content"
@@ -35,7 +37,7 @@
              android:layout_marginLeft="20dp"
              android:text = "next question"
              android:id = "@+id/nextQuestion"
-             android:onClick="nextQuestion"/>
+            />
 
      </LinearLayout>
 
