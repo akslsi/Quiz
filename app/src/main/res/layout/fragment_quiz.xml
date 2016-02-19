@@ -19,9 +19,9 @@
              android:layout_width="match_parent"
              android:layout_height="wrap_content"
              android:layout_weight="0.08"
-             android:text = "what type of animal is this?"
-             android:textSize = "20dp"
-             android:layout_margin = "50dp"/>
+             android:text = "what is this animal?"
+             android:textSize = "30dp"
+             android:layout_margin = "30dp"/>
          <EditText
              android:layout_width="match_parent"
              android:layout_height="wrap_content"
