@@ -93,20 +93,33 @@ public class TextFragment extends Fragment {
         resultButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               // final CheckBox checkBox2 = (CheckBox)getActivity().findViewById(R.id.checkBox2);
+                final CheckBox checkBox2 = (CheckBox)getActivity().findViewById(R.id.checkBox2);
                 final CheckBox checkBox = (CheckBox)getActivity().findViewById(R.id.checkBox);
                 final CheckBox checkBox3 = (CheckBox)getActivity().findViewById(R.id.checkBox3);
                 final CheckBox checkBox4 = (CheckBox)getActivity().findViewById(R.id.checkBox4);
                 final CheckBox checkBox5 = (CheckBox)getActivity().findViewById(R.id.checkBox5);
 
                 //check whether the right checkBox is being checked
-                if(checkBox.isChecked() || checkBox3.isChecked() || checkBox4.isChecked() || checkBox5.isChecked() ){
-                    isRight = false;
-                }else{
-                    isRight = true;
+                if(checkBox2.isChecked()){
+                    if(checkBox.isChecked()||checkBox3.isChecked()||checkBox4.isChecked()||checkBox5.isChecked()){
+                        isRight = false;
+                    }
+                    else {
+                        isRight = true;
+                    }
                 }
+                else{
+                    isRight = false;
+                }
+//                if(checkBox.isChecked() || checkBox3.isChecked() || checkBox4.isChecked() || checkBox5.isChecked() ){
+//                    isRight = false;
+//                }else if(checkBox2.isChecked()){
+//                    isRight = true;
+//                }else{
+//                    isRight = false;
+//                }
 
-                if(QuizActivity.InputString.equals("")){
+                if(QuizActivity.InputString.equalsIgnoreCase("squirrel")){
                     isRight1 = true;
                 }
                 if(QuizActivity.InputString.equals(" ")|| !QuizActivity.InputString.equalsIgnoreCase("squirrel")){
